@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>call - apply - bind</title>
+</head>
+<body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <ul>
+        <li><button class="call-to-action">Aprender</button></li>
+        <li><button class="call-to-action">Aprender más</button></li>
+        <li><button class="call-to-action">Nunca parar de aprender</button></li>
+    </ul>
+
+
+    <script>
+        //call
+        function saludar() {
+            console.log(`Hola, soy ${this.name} ${this.apellido}`)
+        }
+
+        const richard = {
+            name: "Richard",
+            apellido: "Kaufman López"
+        }
+
+        saludar.call(richard)
+
+        function caminar(metros, direccion){
+            console.log(`${this.name} camina ${metros} metros hacia ${direccion}.`)
+        }
+
+        caminar.call(richard, 400, "norte")
+
+        //apply
+        caminar.apply(richard, [800, "noreste"])
+
+        /*
+        Call - comma
+        Apply - arreglo
+        */
+
+        //bind
+        const daniel = {
+            name: "Daniel",
+            apellido: "Sanchez"
+        }
+
+        //crea una nueva función y la retorna
+        const danielSaluda = saludar.bind(daniel)
+        danielSaluda()
+
+        //Se pasan algunos argumentos en el bind y otros cuando se invoca una función
+        const danielCamina = caminar.bind(daniel, 2000)
+        danielCamina('oeste')
+
+        //Cuando es útil usarlos
+        const buttons = document.getElementsByClassName("call-to-action")
+        //wrong porque getElements no devuleve un arreglo sino un NodeList
+        /* buttons.forEach(button => {
+            button.onclick() = () => alert("Nunca pares de aprender")                
+        }); */
+
+        //Right. Invocando call para la función forEach
+        Array.prototype.forEach.call(buttons, button => {
+            button.onclick = () => alert("Nunca pares de aprender");
+        })
+
+    </script>
+</body>
+</html>

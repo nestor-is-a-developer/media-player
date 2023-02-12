@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Prototypal inheritance</title>
+</head>
+<body>
+    <a href="/ejercicios/">Go back</a>
+    <p><em>Abre la consola</em></p>
+
+    <script>
+        function Hero(name){
+            this.name = name;
+        }
+
+        Hero.prototype.saludar = function(){
+            console.log(`New: ${this.name}`)
+        }
+
+        const zelda = new Hero("Zelda")
+
+        //Propiedades de la instancia
+        console.log("Name:", zelda.name)
+        //Propiedades de la "clase"
+        console.log("Saludar:", zelda.saludar)
+
+        //Propiedades heredadas ej: toString (todo es un objeto)
+        console.log("toString:", zelda.toString) 
+
+        //hasOwnProperty (de dònde sale toString?)
+        console.log('zelda.hasOwnProperty("saludar"):', zelda.hasOwnProperty('saludar'))
+        //false, pero lo tiene en su prototype porque lo hereda de Hero
+
+        const prototypeOfZelda = Object.getPrototypeOf(zelda)
+        // el === compara la referenica y no el valor, es decir, que es el mismo objeto en memoria
+        //Por herencia se tiene el mismo prototipo
+        console.log("prototipos iguales:", prototypeOfZelda === Hero.prototype )
+
+        //Object es el prototype del prototype en esta caso... De OBjeto heredan todos los objetos
+        //incluso las funciones porque también son objetos en javascript
+
+    </script>
+</body>
+</html>
